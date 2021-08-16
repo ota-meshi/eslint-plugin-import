@@ -15,9 +15,17 @@ import includes from 'array-includes';
 
 // eslint/lib/util/glob-util has been moved to eslint/lib/util/glob-utils with version 5.3
 // and has been moved to eslint/lib/cli-engine/file-enumerator in version 6
+// and has been moved to eslint/use-at-your-own-risk in version 8
 let listFilesToProcess;
 try {
-  const FileEnumerator = require('eslint/lib/cli-engine/file-enumerator').FileEnumerator;
+  // eslint/lib/cli-engine/file-enumerator has been moved to eslint/use-at-your-own-risk
+  // in version 8
+  let FileEnumerator;
+  try {
+    FileEnumerator = require('eslint/use-at-your-own-risk').FileEnumerator;
+  } catch (e) {
+    FileEnumerator = require('eslint/lib/cli-engine/file-enumerator').FileEnumerator;
+  }
   listFilesToProcess = function (src, extensions) {
     const e = new FileEnumerator({
       extensions: extensions,
@@ -228,7 +236,7 @@ const prepareImportsAndExports = (srcFiles, context) => {
         }
         const localImport = imports.get(key) || new Set();
         value.declarations.forEach(({ importedSpecifiers }) =>
-          importedSpecifiers.forEach(specifier => localImport.add(specifier))
+          importedSpecifiers.forEach(specifier => localImport.add(specifier)),
         );
         imports.set(key, localImport);
       });
@@ -544,13 +552,13 @@ module.exports = {
         if (exportStatement.whereUsed.size < 1) {
           context.report(
             node,
-            `exported declaration '${value}' not used within other modules`
+            `exported declaration '${value}' not used within other modules`,
           );
         }
       } else {
         context.report(
           node,
-          `exported declaration '${value}' not used within other modules`
+          `exported declaration '${value}' not used within other modules`,
         );
       }
     };
