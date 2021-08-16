@@ -36,3 +36,10 @@ if [[ "$TRAVIS_NODE_VERSION" -lt "8" ]]; then
   echo "Downgrading eslint-import-resolver-typescript..."
   npm i --no-save eslint-import-resolver-typescript@1.0.2
 fi
+
+if [[ "$ESLINT_VERSION" = "^8.0.0-0" ]]; then
+  echo "Installing self"
+  npm i --no-save eslint-plugin-import@'.' -f
+  echo "Build self"
+  npm run build
+fi
