@@ -37,3 +37,10 @@ if [[ -n "$TS_PARSER" ]]; then
   echo "Downgrading @typescript-eslint/parser..."
   npm i --no-save @typescript-eslint/parser@2
 fi
+
+if [[ "$ESLINT_VERSION" = "^8.0.0-0" ]]; then
+  echo "Installing self"
+  npm i --no-save eslint-plugin-import@'.' -f
+  echo "Build self"
+  npm run build
+fi
