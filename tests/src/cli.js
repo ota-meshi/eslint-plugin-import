@@ -56,6 +56,7 @@ describe('CLI regression tests', function () {
         this.skip();
       } else {
         if (ESLint) {
+          this.timeout(10000); // In the ESLint v8 test, it takes a lot of time to generate the ESLint class because we linked eslint-plugin-import.
           eslint = new ESLint({
             useEslintrc: false,
             overrideConfigFile: './tests/files/just-json-files/.eslintrc.json',
