@@ -10,10 +10,7 @@ npm install --no-save "eslint@${ESLINT_VERSION}" --ignore-scripts
 
 
 
-if [ "${ESLINT_VERSION}" = '^8.0.0-0' ]; then
-  # workaround for eslint beta.
-  echo "remove this branch when eslint v8 stable version is released."
-elif [[ -n "$TS_PARSER" ]]; then # if TS parser is manually set, always use it
+if [[ -n "$TS_PARSER" ]]; then # if TS parser is manually set, always use it
   echo "Downgrading @typescript-eslint/parser..."
   npm i --no-save "@typescript-eslint/parser@${TS_PARSER}"
 elif [[ "$ESLINT_VERSION" -lt "5" ]]; then # completely remove the new TypeScript parser for ESLint < v5
